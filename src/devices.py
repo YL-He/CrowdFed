@@ -71,11 +71,14 @@ class EMBEDDING_POOL(object): # On CPU
         localclass_H = np.array([1e4 for _ in range(self.num)])
         flag, used = np.ones(self.num), np.zeros(self.num)
         for c, targets in enumerate(selected_embs):
-            votes = np.array(self.SampleMatch(targets)[1])
-            sort_votes = [len(np.argwhere(votes == i)) for i in range(self.num)]
-            ent = Normalized_entropy(sort_votes)
-            localclass_H[c] = ent
-            localclass_Vote[c] = np.array(sort_votes)
+            if len(targets)>0:
+                votes = np.array(self.SampleMatch(targets)[1])
+                sort_votes = [len(np.argwhere(votes == i)) for i in range(self.num)]
+                ent = Normalized_entropy(sort_votes)
+                localclass_H[c] = ent
+                localclass_Vote[c] = np.array(sort_votes)
+            else:
+                ...
         L = -np.ones(self.num) # L[1]=7, local 1 ==> global 7
         for i in range(self.num):
             l_ = np.argmin(flag*localclass_H)
@@ -180,9 +183,10 @@ class CLIENT:
 
         with torch.no_grad():
             for local_l, idxs in enumerate(selected_idcs):
-                images = torch.stack([self.L_dataset[idx][0] for idx in idxs]).to(self.args.device)
-                y_, h, x_ = net(images)
-                selected_embs[local_l] = h.data.cpu()
+                if len(idxs)>0:
+                    images = torch.stack([self.L_dataset[idx][0] for idx in idxs]).to(self.args.device)
+                    y_, h, x_ = net(images)
+                    selected_embs[local_l] = h.data.cpu()
 
         return selected_embs
 
