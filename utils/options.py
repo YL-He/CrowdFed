@@ -13,7 +13,7 @@ def arg_parser():
     parser.add_argument('--hidden_size', type=int, default=256, help="size of embedding")
 
     parser.add_argument('--dataset', type=str, default='mnist', help="name of dataset")
-    parser.add_argument('--model', type=str, default='mlp', help='model name (mlp/cnn)')
+    parser.add_argument('--model', type=str, default='cnn', help='model name (mlp/cnn)')
     parser.add_argument('--num_classes', type=int, default=10, help="number of classes")
     parser.add_argument('--num_channels', type=int, default=1, help="number of channels of images")
     parser.add_argument('--beta', type=float, default=0.5, help="fraction of unlabeled data")
@@ -23,7 +23,8 @@ def arg_parser():
     parser.add_argument('--flag', action='store_true', default=False, help='unlabel')
     parser.add_argument('--all_clients', action='store_true', default=False, help='aggregation over all clients')
     parser.add_argument('--LDS', action='store_true', default=False, help='use dirichlet_noniid')
-    parser.add_argument('--LPS', action='store_true', default=False, help='client relabel')
+    parser.add_argument('--LPS', action='store_true', default=True, help='client relabel')
+    parser.add_argument('--match', type=int, default=0, help="0 for Sample level, 1 for Category level")
 
 
     args = parser.parse_args()

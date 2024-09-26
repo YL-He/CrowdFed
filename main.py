@@ -64,15 +64,9 @@ if __name__ == '__main__':
     args.device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() else 'cpu')
     if args.all_clients:
         args.frac = 1.0
-
-    args.beta = 0.5
-    args.rounds = 200
-    args.dataset = 'mnist'
-    args.model = 'cnn'
-    args.LPS = True
-    args.flag = False
-    args.match = 0
-    args.twomatch = True
+    if args.match == 1:
+        args.twomatch = True
+        args.match=0
 
     if args.dataset == 'mnist':
         args.input_size = 28 * 28
