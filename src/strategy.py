@@ -29,13 +29,8 @@ def Entropy(vector):
     return entropy
 
 def Normalized_entropy(vector):
-    """
-    计算标准化熵
-    :param vector: np.ndarray, 每个元素表示每类的数量
-    :return: float, 标准化熵值
-    """
-    k = len(vector)  # 类别的数量
-    max_entropy = np.log2(k)  # 最大熵（均匀分布时）
+    k = len(vector)  
+    max_entropy = np.log2(k)  
     entropy = Entropy(vector)
     normalized_entropy = entropy / max_entropy
     return normalized_entropy
