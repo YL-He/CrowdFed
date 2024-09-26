@@ -9,7 +9,7 @@ Please execute the following commands before running:
 
 ```
 makedir data
-  makedir Results
+makedir Results
 ```
 
 ### How to run
